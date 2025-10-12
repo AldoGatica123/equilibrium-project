@@ -15,6 +15,7 @@ library(readxl)
 
 ```{r}
 datos <- read_excel("Frijol_ENCOVI_2023.xlsx")
+<<<<<<< Updated upstream
 names(datos)[names(datos) == "P13A07E"] <- "GASTO_TOTAL"
 names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
 ```
@@ -35,3 +36,9 @@ summary(datos)
 
 
 
+=======
+summary(datos)
+```
+
+6901   39.613
+>>>>>>> Stashed changes
