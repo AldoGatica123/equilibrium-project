@@ -11,12 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
 ```
 
+- Se hizo una selección de el producto "Frijol" de la base de datos ENCOVI 2023.
+
 ```{r}
-# Carga de datos
 datos <- read_excel("Frijol_ENCOVI_2023.xlsx")
-head(datos)
+names(datos)[names(datos) == "P13A07E"] <- "GASTO_TOTAL"
+names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
+summary(datos)
 ```
 
-
+```{r}
+# Seleccion de P13A04C con valor 
+```
 
 
