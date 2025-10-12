@@ -15,30 +15,20 @@ library(readxl)
 
 ```{r}
 datos <- read_excel("Frijol_ENCOVI_2023.xlsx")
-<<<<<<< Updated upstream
 names(datos)[names(datos) == "P13A07E"] <- "GASTO_TOTAL"
 names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
 ```
 
 ```{r}
-datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- 3.683
+# Cambiar los 0 de cantidad comprada a la media
+datos$CANTIDAD_COMPRADA[datos$CANTIDAD_COMPRADA == 0] <- NA
+datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- 4.645
 datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] <- 39.61
 ```
 
 ```{r}
 datos$PRECIO_UNITARIO <- datos$GASTO_TOTAL / datos$CANTIDAD_COMPRADA
-summary(datos)
+summary(datos$PRECIO_UNITARIO)
 ```
 
 
-
-
-
-
-
-=======
-summary(datos)
-```
-
-6901   39.613
->>>>>>> Stashed changes

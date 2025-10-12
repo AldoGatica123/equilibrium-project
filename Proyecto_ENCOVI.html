@@ -357,7 +357,6 @@ display: none;
 </div>
 
 
-<<<<<<< Updated upstream
 <ul>
 <li>Se hizo una selección de el producto “Frijol” de la base de datos
 ENCOVI 2023.</li>
@@ -365,115 +364,14 @@ ENCOVI 2023.</li>
 <pre class="r"><code>datos &lt;- read_excel(&quot;Frijol_ENCOVI_2023.xlsx&quot;)
 names(datos)[names(datos) == &quot;P13A07E&quot;] &lt;- &quot;GASTO_TOTAL&quot;
 names(datos)[names(datos) == &quot;P13A07A&quot;] &lt;- &quot;CANTIDAD_COMPRADA&quot;</code></pre>
-<pre class="r"><code>datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] &lt;- 3.683
+<pre class="r"><code># Cambiar los 0 de cantidad comprada a la media
+datos$CANTIDAD_COMPRADA[datos$CANTIDAD_COMPRADA == 0] &lt;- NA
+datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] &lt;- 4.645
 datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] &lt;- 39.61</code></pre>
 <pre class="r"><code>datos$PRECIO_UNITARIO &lt;- datos$GASTO_TOTAL / datos$CANTIDAD_COMPRADA
-=======
-<pre class="r"><code># Carga de datos
-datos &lt;- read_excel(&quot;Frijol_ENCOVI_2023.xlsx&quot;)
->>>>>>> Stashed changes
-summary(datos)</code></pre>
-<pre><code>##      DEPTO          DOMINIO           AREA            UPM       
-##  Min.   : 1.00   Min.   :1.000   Min.   :1.000   Min.   :   29  
-##  1st Qu.: 5.00   1st Qu.:2.000   1st Qu.:1.000   1st Qu.: 7755  
-##  Median :11.00   Median :2.000   Median :1.000   Median :13070  
-##  Mean   :10.92   Mean   :2.405   Mean   :1.468   Mean   :14165  
-##  3rd Qu.:17.00   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:21416  
-##  Max.   :22.00   Max.   :3.000   Max.   :2.000   Max.   :25721  
-##                                                                 
-##     NO_HOGAR         FACTOR          POBREZA      ALIMENTOSB_ID   
-##  Min.   :    1   Min.   :  22.0   Min.   :0.000   Min.   :    13  
-##  1st Qu.: 2832   1st Qu.: 174.0   1st Qu.:2.000   1st Qu.:189993  
-##  Median : 5532   Median : 269.0   Median :3.000   Median :404336  
-##  Mean   : 5528   Mean   : 362.8   Mean   :2.407   Mean   :427782  
-##  3rd Qu.: 8225   3rd Qu.: 446.0   3rd Qu.:3.000   3rd Qu.:668457  
-##  Max.   :10964   Max.   :2410.0   Max.   :3.000   Max.   :902336  
-##                                                                   
-##       OCC           P13A04A     P13A04B             P13A04C     
-##  Min.   :    1   Min.   :19   Length:10314       Min.   :1.000  
-##  1st Qu.:   90   1st Qu.:19   Class :character   1st Qu.:1.000  
-##  Median :  355   Median :19   Mode  :character   Median :1.000  
-##  Mean   : 5271   Mean   :19                      Mean   :1.156  
-##  3rd Qu.: 9753   3rd Qu.:19                      3rd Qu.:1.000  
-##  Max.   :30138   Max.   :19                      Max.   :2.000  
-##                                                                 
-<<<<<<< Updated upstream
-##      P13A05          P13A06       CANTIDAD_COMPRADA    P13A07C     
-##  Min.   : 1.00   Min.   :  0.01   Min.   : 0.000    Min.   : 3.00  
-##  1st Qu.:12.00   1st Qu.: 32.00   1st Qu.: 1.000    1st Qu.:30.00  
-##  Median :12.00   Median : 56.00   Median : 3.683    Median :30.00  
-##  Mean   :11.17   Mean   : 78.24   Mean   : 3.683    Mean   :29.46  
-##  3rd Qu.:12.00   3rd Qu.: 96.00   3rd Qu.: 4.000    3rd Qu.:30.00  
-##  Max.   :12.00   Max.   :750.00   Max.   :40.000    Max.   :51.00  
-##  NA&#39;s   :1611    NA&#39;s   :1611                       NA&#39;s   :3414   
-##     P13A07D         GASTO_TOTAL          P13A08         P13A09      
-##  Min.   :  400.0   Min.   :   4.00   Min.   :1.00   Min.   : 1.000  
-##  1st Qu.:  454.0   1st Qu.:  22.00   1st Qu.:1.00   1st Qu.: 4.000  
-##  Median :  454.0   Median :  39.61   Median :2.00   Median : 7.000  
-##  Mean   :  551.9   Mean   :  39.61   Mean   :1.72   Mean   : 7.613  
-##  3rd Qu.:  454.0   3rd Qu.:  39.61   3rd Qu.:2.00   3rd Qu.:12.000  
-##  Max.   :45400.0   Max.   :1000.00   Max.   :2.00   Max.   :12.000  
-##  NA&#39;s   :3414                                       NA&#39;s   :7431    
-=======
-##      P13A05          P13A06          P13A07A          P13A07C     
-##  Min.   : 1.00   Min.   :  0.01   Min.   : 0.000   Min.   : 3.00  
-##  1st Qu.:12.00   1st Qu.: 32.00   1st Qu.: 1.000   1st Qu.:30.00  
-##  Median :12.00   Median : 56.00   Median : 3.000   Median :30.00  
-##  Mean   :11.17   Mean   : 78.24   Mean   : 3.683   Mean   :29.46  
-##  3rd Qu.:12.00   3rd Qu.: 96.00   3rd Qu.: 5.000   3rd Qu.:30.00  
-##  Max.   :12.00   Max.   :750.00   Max.   :40.000   Max.   :51.00  
-##  NA&#39;s   :1611    NA&#39;s   :1611     NA&#39;s   :1611     NA&#39;s   :3414   
-##     P13A07D           P13A07E            P13A08         P13A09      
-##  Min.   :  400.0   Min.   :   4.00   Min.   :1.00   Min.   : 1.000  
-##  1st Qu.:  454.0   1st Qu.:  16.00   1st Qu.:1.00   1st Qu.: 4.000  
-##  Median :  454.0   Median :  30.00   Median :2.00   Median : 7.000  
-##  Mean   :  551.9   Mean   :  39.61   Mean   :1.72   Mean   : 7.613  
-##  3rd Qu.:  454.0   3rd Qu.:  48.00   3rd Qu.:2.00   3rd Qu.:12.000  
-##  Max.   :45400.0   Max.   :1000.00   Max.   :2.00   Max.   :12.000  
-##  NA&#39;s   :3414      NA&#39;s   :3414                     NA&#39;s   :7431    
->>>>>>> Stashed changes
-##     P13A10A          P13A10C         P13A10D         P13A10E      
-##  Min.   : 0.500   Min.   : 3.00   Min.   :  400   Min.   :   4.0  
-##  1st Qu.: 2.000   1st Qu.:30.00   1st Qu.:  454   1st Qu.:  24.0  
-##  Median : 4.000   Median :30.00   Median :  454   Median :  48.0  
-##  Mean   : 7.288   Mean   :29.04   Mean   : 3314   Mean   : 137.1  
-##  3rd Qu.: 9.000   3rd Qu.:30.00   3rd Qu.:  454   3rd Qu.: 100.0  
-##  Max.   :75.000   Max.   :51.00   Max.   :45400   Max.   :6400.0  
-##  NA&#39;s   :7431     NA&#39;s   :7431    NA&#39;s   :7431    NA&#39;s   :7431    
-##     P13A11A          P13A11C         P13A11D           P13A11E       
-##  Min.   : 0.000   Min.   : 3.00   Min.   :  400.0   Min.   :   4.00  
-##  1st Qu.: 0.000   1st Qu.:30.00   1st Qu.:  454.0   1st Qu.:  16.00  
-##  Median : 0.000   Median :30.00   Median :  454.0   Median :  30.00  
-##  Mean   : 2.691   Mean   :29.65   Mean   :  962.4   Mean   :  53.09  
-##  3rd Qu.: 4.000   3rd Qu.:30.00   3rd Qu.:  454.0   3rd Qu.:  60.00  
-##  Max.   :50.000   Max.   :51.00   Max.   :45400.0   Max.   :1500.00  
-##  NA&#39;s   :7431     NA&#39;s   :8885    NA&#39;s   :8885      NA&#39;s   :8885     
-##     P13A12A         P13A12B         P13A12C         P13A12D     
-##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
-##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:2.000  
-##  Median :2.000   Median :1.000   Median :2.000   Median :2.000  
-##  Mean   :1.629   Mean   :1.347   Mean   :1.994   Mean   :1.989  
-##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:2.000  
-##  Max.   :2.000   Max.   :2.000   Max.   :2.000   Max.   :2.000  
-##  NA&#39;s   :7431    NA&#39;s   :7431    NA&#39;s   :7431    NA&#39;s   :7431   
-<<<<<<< Updated upstream
-##     P13A12E      PRECIO_UNITARIO
-##  Min.   :1.000   Min.   : 6.00  
-##  1st Qu.:2.000   1st Qu.: 8.00  
-##  Median :2.000   Median : 9.00  
-##  Mean   :1.998   Mean   :  Inf  
-##  3rd Qu.:2.000   3rd Qu.:10.75  
-##  Max.   :2.000   Max.   :  Inf  
-=======
-##     P13A12E     
-##  Min.   :1.000  
-##  1st Qu.:2.000  
-##  Median :2.000  
-##  Mean   :1.998  
-##  3rd Qu.:2.000  
-##  Max.   :2.000  
->>>>>>> Stashed changes
-##  NA&#39;s   :7431</code></pre>
+summary(datos$PRECIO_UNITARIO)</code></pre>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##    6.000    8.000    8.527    9.360    8.527 1000.000</code></pre>
 
 
 
