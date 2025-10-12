@@ -1,5 +1,22 @@
 ---
-title: "Proyecto_ENCOVI"
+title: "Proyecto ENCOVI"
+author: "Aldo Gatica - Alyson Rosales"
+date: "2025-10-11"
 output: html_document
 ---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+```
+
+```{r}
+# Carga de datos
+datos <- read_excel("Frijol_ENCOVI_2023.xlsx")
+head(datos)
+```
+
+
+
 
