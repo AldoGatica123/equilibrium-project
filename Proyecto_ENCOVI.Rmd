@@ -19,16 +19,53 @@ names(datos)[names(datos) == "P13A07E"] <- "GASTO_TOTAL"
 names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
 ```
 
+- Se reemplazaron los valores 0 por NA y se imputaron los valores medios para las variables GASTO_TOTAL y CANTIDAD_COMPRADA.
+- Se creó la variable PRECIO_UNITARIO dividiendo GASTO_TOTAL entre CANTIDAD_COMPRADA.
+
 ```{r}
-# Cambiar los 0 de cantidad comprada a la media
 datos$CANTIDAD_COMPRADA[datos$CANTIDAD_COMPRADA == 0] <- NA
-datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- 4.645
-datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] <- 39.61
+datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- median(datos$CANTIDAD_COMPRADA, na.rm = TRUE)
+datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] <- median(datos$GASTO_TOTAL, na.rm = TRUE)
 ```
 
 ```{r}
 datos$PRECIO_UNITARIO <- datos$GASTO_TOTAL / datos$CANTIDAD_COMPRADA
 summary(datos$PRECIO_UNITARIO)
 ```
+
+
+
+```{r}
+Q1 <- quantile(datos$PRECIO_UNITARIO, 0.25, na.rm = TRUE)
+Q3 <- quantile(datos$PRECIO_UNITARIO, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+
+limite_inferior <- Q1 - 1.5 * IQR
+limite_superior <- Q3 + 1.5 * IQR
+
+datos$PRECIO_UNITARIO[datos$PRECIO_UNITARIO < limite_inferior] <- limite_inferior
+datos$PRECIO_UNITARIO[datos$PRECIO_UNITARIO > limite_superior] <- limite_superior
+
+summary(datos$PRECIO_UNITARIO)
+
+hist(datos$PRECIO_UNITARIO, main = "Histograma de Precio Unitario después del tratamiento de outliers", xlab = "Precio Unitario", col = "lightblue", border = "black")
+qqnorm(datos$PRECIO_UNITARIO, main = "QQ-Plot de Precio Unitario después del tratamiento de outliers")
+qqline(datos$PRECIO_UNITARIO, col = "red")
+```
+
+
+```{r}
+modelo <- lm(datos$CANTIDAD_COMPRADA ~ datos$PRECIO_UNITARIO, weights = datos$FACTOR, datos)
+summary(modelo)
+```
+
+# Funcion de demanda
+**Q = 5.35324 - 0.11814 * P**
+
+
+
+
+
+
 
 
