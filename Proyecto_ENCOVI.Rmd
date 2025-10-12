@@ -17,11 +17,21 @@ library(readxl)
 datos <- read_excel("Frijol_ENCOVI_2023.xlsx")
 names(datos)[names(datos) == "P13A07E"] <- "GASTO_TOTAL"
 names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
-summary(datos)
 ```
 
 ```{r}
-# Seleccion de P13A04C con valor 
+datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- 3.683
+datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] <- 39.61
 ```
+
+```{r}
+datos$PRECIO_UNITARIO <- datos$GASTO_TOTAL / datos$CANTIDAD_COMPRADA
+summary(datos)
+```
+
+
+
+
+
 
 
