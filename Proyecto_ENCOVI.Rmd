@@ -24,8 +24,9 @@ names(datos)[names(datos) == "P13A07A"] <- "CANTIDAD_COMPRADA"
 
 ```{r}
 datos$CANTIDAD_COMPRADA[datos$CANTIDAD_COMPRADA == 0] <- NA
-datos$CANTIDAD_COMPRADA[is.na(datos$CANTIDAD_COMPRADA)] <- median(datos$CANTIDAD_COMPRADA, na.rm = TRUE)
+datos <- datos[!is.na(datos$CANTIDAD_COMPRADA), ]
 datos$GASTO_TOTAL[is.na(datos$GASTO_TOTAL)] <- median(datos$GASTO_TOTAL, na.rm = TRUE)
+summary(datos)
 ```
 
 ```{r}
