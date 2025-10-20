@@ -65,98 +65,20 @@ summary(modelo)
 # Medida de Ingresos
 
 ```{r}
-library(readxl)
-bd_ing <- read_excel("Ingreso_ENCOVI_2023.xlsx")
-
-#Inspeccionamos la base de datos
-dim(bd_ing)
-str(bd_ing)
-View(bd_ing)
-
-#Ordenamos la base para tener una mejor visualización del filtro que se
-#realizará a continuación.
-library(dplyr)
-bd_ing <- bd_ing %>%
-  arrange(NO_HOGAR, CP)
-
-#Seleccionamos únicamente al jefe del hogar para tener solo un ingreso por familia.
-#El jefe del hogar aparece con el código 1 en la variable CP.
-#(otra opción sería hacer una suma de los ingresos de todos los miembros de la familia).
-
-bd_ing2 <- bd_ing[(bd_ing$CP) == 1, ]
-dim(bd_ing2) #me quedan 10,964 filas
-View(bd_ing2)
-
-#Vamos a hacer el análisis únicamente con ingresos laborales. Así que vamos
-#a filtrar para quedarnos únicamente con los ocupados. Eso implica descartar a los
-#valores perdidos.
-
-bd_ing2sinNA <- bd_ing2[
-  !is.na(bd_ing2$P10C01), 
-  ]
-
-#Inspeccionamos
-dim(bd_ing2sinNA) #me quedan 8,456 filas
-summary(bd_ing2sinNA$P10C01)
-
-###Ahora vamos a revisar las variables que se van a incluir en el agregado de ingresos.
-#Salario mensual. Mediana 2,240; hay 2,988 NAs
-summary(bd_ing2sinNA$P10C27) 
-
-#Bono14. Mediana 3,000; hay 6,811 NAs
-summary(bd_ing2sinNA$P10C31B)
-
-#Aguinaldo. Mediana 3,000; hay 6,956 NAs
-summary(bd_ing2sinNA$P10C32B)
-
-#Quinceavo. Mediana 2,500; hay 8,403 NAs
-summary(bd_ing2sinNA$P10C34B)
-
-#Bono de Productividad. Mediana 1,000; hay 8,316 NAs
-summary(bd_ing2sinNA$P10C38B)
-
-#Para poder construir el agregado de ingreso, necesitamos transformar los NAs
-#en las variables anteriores. A todos los NAs les vamos a imputar la mediana.
-
-#Salario mensual
-bd_ing2sinNA$salariosinNA <- ifelse(is.na(bd_ing2sinNA$P10C27), median(bd_ing2sinNA$P10C27, na.rm=TRUE), bd_ing2sinNA$P10C27)
-summary(bd_ing2sinNA$salariosinNA)
-
-#Anualizamos el salario mensual
-bd_ing2sinNA$salariosinNAanual <- bd_ing2sinNA$salariosinNA*12
-summary(bd_ing2sinNA$salariosinNAanual)
-
-#Bono 14
-bd_ing2sinNA$P10C31BsinNA <- ifelse(is.na(bd_ing2sinNA$P10C31B), median(bd_ing2sinNA$P10C31B, na.rm=TRUE), bd_ing2sinNA$P10C31B)
-summary(bd_ing2sinNA$P10C31BsinNA)
-
-#Aguinaldo
-bd_ing2sinNA$P10C32BsinNA <- ifelse(is.na(bd_ing2sinNA$P10C32B), median(bd_ing2sinNA$P10C32B, na.rm=TRUE), bd_ing2sinNA$P10C32B)
-summary(bd_ing2sinNA$P10C32BsinNA)
-
-#Quinceavo
-bd_ing2sinNA$P10C34BsinNA <- ifelse(is.na(bd_ing2sinNA$P10C34B), median(bd_ing2sinNA$P10C34B, na.rm=TRUE), bd_ing2sinNA$P10C34B)
-summary(bd_ing2sinNA$P10C34BsinNA)
-
-#Bono de Productividad
-bd_ing2sinNA$P10C38BsinNA <- ifelse(is.na(bd_ing2sinNA$P10C38B), median(bd_ing2sinNA$P10C38B, na.rm=TRUE), bd_ing2sinNA$P10C38B)
-summary(bd_ing2sinNA$P10C38BsinNA)
-
-#Sumamos los ingresos salariales para obtener el agregado de ingreso de cada jefe de hogar
-bd_ing2sinNA$ingreso_total <- bd_ing2sinNA$salariosinNAanual +
-  bd_ing2sinNA$P10C31BsinNA + bd_ing2sinNA$P10C32BsinNA +
-  bd_ing2sinNA$P10C34BsinNA + bd_ing2sinNA$P10C38BsinNA
-summary (bd_ing2sinNA$ingreso_total)  
-
-#Ahora lo transformamos en términos quincenales para que esté en la misma medida
-#que el consumo.
-bd_ing2sinNA$ingreso_total_quincenal <- bd_ing2sinNA$ingreso_total / 24
-summary (bd_ing2sinNA$ingreso_total_quincenal)  
-
+datos_ingreso <- read_excel("Personas_ENCOVI_2023.xlsx")
+datos_ingreso <- datos_ingreso[!is.na(datos_ingreso$P10C01), ]
+summary(datos_ingreso)
+head(datos_ingreso)
+dim(datos_ingreso)
 ```
 
-
-
+```{r}
+# No_HOGAR I want to group by HOGAR and sum all the INGRESO variables without external dependencies
+# ingreso_hogar <- aggregate(cbind(P10C01, P10C27, P10C31B, P10C32B, P10C34B, P10C38B) ~ NO_HOGAR, data = datos_ingreso, sum, na.rm = TRUE)
+# summary(ingreso_hogar)
+# head(ingreso_hogar)
+# dim(ingreso_hogar)
+```
 
 
 
